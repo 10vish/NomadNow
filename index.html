@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NomadNow - Travel Planner with Weather</title>
+    <meta name="description" content="Plan your perfect trip with weather-aware insights, smart packing lists, and itinerary planning">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header" role="banner">
+            <div class="container">
+                <div class="header-content">
+                    <h1 class="logo">
+                        <img src="assets/icons/nomadnow-logo.png" alt="NomadNow" class="logo-icon">
+                    </h1>
+                    <nav class="nav" role="navigation" aria-label="Main navigation">
+                        <button class="nav-btn active" data-tab="planner" aria-pressed="true">
+                            Plan Trip
+                        </button>
+                        <button class="nav-btn" data-tab="itinerary" aria-pressed="false">
+                            Itinerary
+                        </button>
+                        <button class="nav-btn" data-tab="packing" aria-pressed="false">
+                            Packing
+                        </button>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main" role="main">
+            <div class="container">
+                <!-- Trip Planner Tab -->
+                <section id="planner-tab" class="tab-content active" role="tabpanel" aria-labelledby="planner-nav">
+                    <div class="hero">
+                        <h2>Plan Your Perfect Trip</h2>
+                        <p>Get weather-aware insights and smart recommendations for your next adventure</p>
+                    </div>
+
+                    <form class="trip-form" id="trip-form" role="form" aria-label="Trip planning form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="destination">Destination</label>
+                                <div class="input-container">
+                                    <input 
+                                        type="text" 
+                                        id="destination" 
+                                        name="destination" 
+                                        placeholder="Enter city or location"
+                                        autocomplete="off"
+                                        aria-describedby="destination-help"
+                                        required>
+                                    <div id="destination-suggestions" class="suggestions" role="listbox" aria-label="Destination suggestions"></div>
+                                </div>
+                                <div id="destination-help" class="help-text">
+                                    Start typing to search for destinations
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="start-date">Start Date</label>
+                                <input 
+                                    type="date" 
+                                    id="start-date" 
+                                    name="startDate" 
+                                    required
+                                    aria-describedby="date-help">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="end-date">End Date</label>
+                                <input 
+                                    type="date" 
+                                    id="end-date" 
+                                    name="endDate" 
+                                    required
+                                    aria-describedby="date-help">
+                                <div id="date-help" class="help-text">
+                                    Maximum 7 days forecast available
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" id="plan-trip-btn">
+                            <span class="btn-text">Plan My Trip</span>
+                            <span class="loading-spinner" aria-hidden="true"></span>
+                        </button>
+                    </form>
+
+                    <!-- Weather Results -->
+                    <div id="weather-results" class="weather-results" role="region" aria-label="Weather forecast results">
+                        <!-- Weather content will be injected here -->
+                    </div>
+
+                    <!-- Trip Summary -->
+                    <div id="trip-summary" class="trip-summary" role="region" aria-label="Trip summary">
+                        <!-- Trip summary will be injected here -->
+                    </div>
+                </section>
+
+                <!-- Itinerary Tab -->
+                <section id="itinerary-tab" class="tab-content" role="tabpanel" aria-labelledby="itinerary-nav">
+                    <div class="section-header">
+                        <h2>Your Itinerary</h2>
+                        <div class="section-actions">
+                            <button class="btn btn-secondary" id="export-itinerary">
+                                Export Itinerary
+                            </button>
+                            <button class="btn btn-secondary" id="share-itinerary">
+                                Share Trip
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="itinerary-content" class="itinerary-content">
+                        <div class="empty-state">
+                            <div class="empty-icon" aria-hidden="true">📅</div>
+                            <h3>No itinerary yet</h3>
+                            <p>Plan a trip to start building your itinerary</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Packing Tab -->
+                <section id="packing-tab" class="tab-content" role="tabpanel" aria-labelledby="packing-nav">
+                    <div class="section-header">
+                        <h2>Packing Checklist</h2>
+                        <div class="section-actions">
+                            <button class="btn btn-secondary" id="add-packing-item">
+                                Add Item
+                            </button>
+                            <button class="btn btn-secondary" id="export-packing">
+                                Export List
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="packing-content" class="packing-content">
+                        <div class="empty-state">
+                            <div class="empty-icon" aria-hidden="true">🎒</div>
+                            <h3>No packing list yet</h3>
+                            <p>Plan a trip to get smart packing recommendations</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer" role="contentinfo">
+            <div class="container">
+                <div class="footer-content">
+                    <p>&copy; 2025 NomadNow. Built with ❤️ for travelers.</p>
+                    <div class="footer-links">
+                        <button class="link-btn" id="about-btn">About</button>
+                        <button class="link-btn" id="privacy-btn">Privacy</button>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Modals -->
+        <div id="modal-overlay" class="modal-overlay" role="dialog" aria-hidden="true">
+            <div class="modal" role="document">
+                <div class="modal-header">
+                    <h3 id="modal-title">Modal Title</h3>
+                    <button class="modal-close" aria-label="Close modal">&times;</button>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <!-- Modal content will be injected here -->
+                </div>
+                <div class="modal-footer" id="modal-footer">
+                    <!-- Modal footer will be injected here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true">
+            <!-- Toast notifications will be injected here -->
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
